@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3DCPX — Orçamento</title>
+  <meta name="description" content="Solicite um orçamento para impressão 3D, engenharia reversa ou prototipagem. Resposta em até 24h. Sem compromisso." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="nav" id="nav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo">3D<span>CPX</span></a>
+      <nav class="nav__links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="solucoes.html">Soluções</a>
+        <a href="engenharia-reversa.html">Eng. Reversa</a>
+        <a href="portfolio.html">Portfólio</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="orcamento.html" class="active">Orçamento</a>
+      </nav>
+      <a href="orcamento.html" class="btn btn--primary nav__cta">Iniciar Projeto</a>
+      <button class="nav__hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+      <div class="page-header__grid"></div>
+      <div class="page-header__glow"></div>
+      <div class="container">
+        <div class="page-header__inner">
+          <div class="section-tag">Vamos começar</div>
+          <h1 class="page-header__title">Iniciar<br /><em>um projeto.</em></h1>
+          <p class="page-header__sub">Descreva o que precisa — uma ideia, uma peça quebrada, um croqui ou um arquivo pronto. Retornamos com análise técnica e orçamento em até 24h.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORMULÁRIO + CANAIS -->
+    <section class="cta-final" id="contato" style="padding-top: 88px;">
+      <div class="cta-final__bg">
+        <div class="cta-final__glow"></div>
+      </div>
+      <div class="container">
+        <div class="cta-final__inner reveal">
+          <div class="section-tag section-tag--center">Formulário de contato</div>
+          <h2 class="cta-final__title">Seu projeto tem solução.<br />Vamos encontrá-la juntos.</h2>
+          <p class="cta-final__sub">Sem compromisso. Sem complicação. Resposta em até 24h.</p>
+          <div class="cta-final__form">
+            <form class="contact-form" id="contactForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">Nome</label>
+                  <input type="text" id="name" name="name" placeholder="Seu nome" required />
+                </div>
+                <div class="form-group">
+                  <label for="email">E-mail</label>
+                  <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone">WhatsApp</label>
+                  <input type="tel" id="phone" name="phone" placeholder="(00) 00000-0000" />
+                </div>
+                <div class="form-group">
+                  <label for="type">Tipo de projeto</label>
+                  <select id="type" name="type">
+                    <option value="">Selecione...</option>
+                    <option>Prototipagem rápida</option>
+                    <option>Engenharia reversa</option>
+                    <option>Peças funcionais</option>
+                    <option>Modelagem 3D</option>
+                    <option>Maquete</option>
+                    <option>Produção em série</option>
+                    <option>Outro</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group form-group--full">
+                <label for="message">Descreva o projeto</label>
+                <textarea id="message" name="message" rows="5" placeholder="O que você precisa? Pode ser uma ideia, um problema, ou apenas 'tenho uma peça quebrada e preciso de uma nova'. Qualquer informação já nos ajuda a começar."></textarea>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn--primary btn--lg btn--full">
+                  Enviar solicitação
+                </button>
+                <p class="form-note">Ou fale direto pelo <a href="https://wa.me/5500000000000">WhatsApp</a> — resposta ainda mais rápida.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ COMPLETO -->
+    <section class="faq" id="faq">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-tag">Dúvidas frequentes</div>
+          <h2 class="section-title">FAQ</h2>
+        </div>
+        <div class="faq__list">
+
+          <div class="faq-item reveal">
+            <button class="faq-item__q" aria-expanded="false">
+              <span>Preciso ter um arquivo 3D para solicitar orçamento?</span>
+              <span class="faq-item__icon">+</span>
+            </button>
+            <div class="faq-item__a">
+              <p>Não. Você pode enviar uma foto, um desenho técnico, uma peça física para escaneamento ou apenas uma descrição do que precisa. Nossa equipe faz a modelagem e te apresenta o modelo antes de imprimir.</p>
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-item__q" aria-expanded="false">
+              <span>Qual é o prazo de entrega?</span>
+              <span class="faq-item__icon">+</span>
+            </button>
+            <div class="faq-item__a">
+              <p>Depende da complexidade. Protótipos simples saem em 24–48h após aprovação do orçamento. Projetos com modelagem, séries maiores ou acabamento especial podem levar de 5 a 15 dias úteis. O prazo exato é informado no orçamento antes de qualquer cobrança.</p>
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-item__q" aria-expanded="false">
+              <span>Qual material devo escolher?</span>
+              <span class="faq-item__icon">+</span>
+            </button>
+            <div class="faq-item__a">
+              <p>Não precisa saber — é nossa função recomendar o material certo com base na aplicação, esforço mecânico, temperatura e acabamento desejado. Trabalhamos com PLA, ABS, PETG, ASA, TPU, Nylon PA12, PC, Resina SLA e materiais compostos.</p>
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-item__q" aria-expanded="false">
+              <span>Vocês atendem fora do Brasil?</span>
+              <span class="faq-item__icon">+</span>
+            </button>
+            <div class="faq-item__a">
+              <p>Sim. Fazemos modelagem e consultoria remota para qualquer localidade. A entrega física é via correios internacionais ou transportadora internacional, com custo de frete calculado no orçamento.</p>
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-item__q" aria-expanded="false">
+              <span>Emitem nota fiscal?</span>
+              <span class="faq-item__icon">+</span>
+            </button>
+            <div class="faq-item__a">
+              <p>Sim. Somos empresa regularizada (CNPJ) e emitimos NF-e para todos os pedidos, incluindo os para pessoa física. Aceitamos PJ com PO e contratos de fornecimento contínuo.</p>
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-item__q" aria-expanded="false">
+              <span>O arquivo 3D que envio fica seguro?</span>
+              <span class="faq-item__icon">+</span>
+            </button>
+            <div class="faq-item__a">
+              <p>Absolutamente. Assinamos NDA mediante solicitação e nunca compartilhamos ou reutilizamos arquivos de clientes. Seus dados e arquivos pertencem a você.</p>
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-item__q" aria-expanded="false">
+              <span>Qual é o tamanho máximo que conseguem imprimir?</span>
+              <span class="faq-item__icon">+</span>
+            </button>
+            <div class="faq-item__a">
+              <p>Nosso volume máximo em FDM é de 350×350×400mm por peça única. Para objetos maiores, fazemos impressão em partes e montagem com encaixes projetados para serem invisíveis no produto final.</p>
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-item__q" aria-expanded="false">
+              <span>Fazem contratos de fornecimento recorrente?</span>
+              <span class="faq-item__icon">+</span>
+            </button>
+            <div class="faq-item__a">
+              <p>Sim. Para clientes industriais ou empresas com demanda regular, estruturamos contratos de fornecimento contínuo com SLA de resposta dedicado, prioridade de fila de impressão e condições comerciais especiais.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CANAIS ALTERNATIVOS -->
+    <section class="cta-simple" style="padding-top: 0; padding-bottom: var(--section-py);">
+      <div class="cta-simple__glow"></div>
+      <div class="container">
+        <div class="cta-simple__inner reveal">
+          <div class="section-tag section-tag--center">Prefere falar diretamente?</div>
+          <h2 class="cta-simple__title">WhatsApp,<br />e-mail ou formulário.</h2>
+          <p class="cta-simple__sub">Qualquer canal funciona. O importante é ter sua ideia chegando até nós — o resto é nossa responsabilidade.</p>
+          <div class="cta-simple__actions">
+            <a href="https://wa.me/5500000000000" class="btn btn--primary btn--lg">Abrir WhatsApp</a>
+            <a href="mailto:contato@3dcpx.com.br" class="btn btn--ghost btn--lg">Enviar e-mail</a>
+          </div>
+          <p class="cta-note">Atendimento: Seg–Sex, 8h–18h · resposta garantida em até 24h</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="index.html" class="nav__logo">3D<span>CPX</span></a>
+          <p>Impressão 3D de alta precisão e engenharia reversa. Do problema à solução.</p>
+          <div class="footer__social">
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M7 10v7M7 7v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11 17v-4c0-1.5 1-2 2-2s2 .5 2 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11 10v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+            <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none"><path d="M21 12C21 16.97 16.97 21 12 21C10.5 21 9.08 20.63 7.84 19.98L3 21L4.02 16.16C3.37 14.92 3 13.5 3 12C3 7.03 7.03 3 12 3C16.97 3 21 7.03 21 12Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+        <div class="footer__cols">
+          <div class="footer__col">
+            <h5>Serviços</h5>
+            <a href="solucoes.html">Prototipagem Rápida</a>
+            <a href="engenharia-reversa.html">Engenharia Reversa</a>
+            <a href="solucoes.html">Peças Funcionais</a>
+            <a href="solucoes.html">Modelagem 3D</a>
+            <a href="solucoes.html">Pós-processamento</a>
+          </div>
+          <div class="footer__col">
+            <h5>Empresa</h5>
+            <a href="sobre.html">Sobre Pedro</a>
+            <a href="sobre.html">A Oficina</a>
+            <a href="portfolio.html">Portfólio</a>
+            <a href="orcamento.html">FAQ</a>
+          </div>
+          <div class="footer__col">
+            <h5>Contato</h5>
+            <a href="mailto:contato@3dcpx.com.br">contato@3dcpx.com.br</a>
+            <a href="https://wa.me/5500000000000">WhatsApp</a>
+            <span>Atendimento: Seg–Sex, 8h–18h</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2025 3DCPX. Todos os direitos reservados.</p>
+        <p>CNPJ: 00.000.000/0001-00</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3DCPX — Portfólio</title>
+  <meta name="description" content="Projetos de impressão 3D, engenharia reversa e prototipagem entregues pela 3DCPX para indústria, arquitetura, produto e pesquisa." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="nav" id="nav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo">3D<span>CPX</span></a>
+      <nav class="nav__links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="solucoes.html">Soluções</a>
+        <a href="engenharia-reversa.html">Eng. Reversa</a>
+        <a href="portfolio.html" class="active">Portfólio</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="orcamento.html">Orçamento</a>
+      </nav>
+      <a href="orcamento.html" class="btn btn--primary nav__cta">Iniciar Projeto</a>
+      <button class="nav__hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+      <div class="page-header__grid"></div>
+      <div class="page-header__glow"></div>
+      <div class="container">
+        <div class="page-header__inner">
+          <div class="section-tag">Portfólio</div>
+          <h1 class="page-header__title">Projetos que<br /><em>saíram do papel.</em></h1>
+          <p class="page-header__sub">Mais de 800 projetos entregues para indústria, arquitetura, produto e pesquisa. Cada peça com engenharia real por trás.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO COMPLETO COM FILTROS -->
+    <section class="portfolio" id="projetos" style="padding-top: 88px;">
+      <div class="container">
+        <div class="portfolio__filters reveal">
+          <button class="filter-btn active" data-filter="all">Todos</button>
+          <button class="filter-btn" data-filter="industria">Indústria</button>
+          <button class="filter-btn" data-filter="arquitetura">Arquitetura</button>
+          <button class="filter-btn" data-filter="produto">Produto</button>
+          <button class="filter-btn" data-filter="reversa">Eng. Reversa</button>
+        </div>
+        <div class="portfolio__grid">
+
+          <div class="portfolio-card reveal" data-category="reversa">
+            <div class="portfolio-card__img portfolio-card__img--1">
+              <div class="portfolio-card__overlay">
+                <span class="portfolio-card__cat">Engenharia Reversa</span>
+              </div>
+            </div>
+            <div class="portfolio-card__info">
+              <h4>Peça de reposição automotiva</h4>
+              <p>Componente descontinuado recriado via escaneamento 3D com tolerância de ±0,1mm</p>
+              <span class="material-tag">PA12 · Nylon</span>
+            </div>
+          </div>
+
+          <div class="portfolio-card reveal portfolio-card--tall" data-category="arquitetura">
+            <div class="portfolio-card__img portfolio-card__img--2">
+              <div class="portfolio-card__overlay">
+                <span class="portfolio-card__cat">Arquitetura</span>
+              </div>
+            </div>
+            <div class="portfolio-card__info">
+              <h4>Maquete arquitetônica 1:100</h4>
+              <p>Complexo residencial em escala com detalhamento de fachada e paisagismo</p>
+              <span class="material-tag">PLA · Acabamento premium</span>
+            </div>
+          </div>
+
+          <div class="portfolio-card reveal" data-category="produto">
+            <div class="portfolio-card__img portfolio-card__img--3">
+              <div class="portfolio-card__overlay">
+                <span class="portfolio-card__cat">Produto</span>
+              </div>
+            </div>
+            <div class="portfolio-card__info">
+              <h4>Protótipo de produto de consumo</h4>
+              <p>MVP para apresentação a investidores com encaixe funcional e acabamento pintado</p>
+              <span class="material-tag">ABS · Pintado</span>
+            </div>
+          </div>
+
+          <div class="portfolio-card reveal" data-category="industria">
+            <div class="portfolio-card__img portfolio-card__img--4">
+              <div class="portfolio-card__overlay">
+                <span class="portfolio-card__cat">Indústria</span>
+              </div>
+            </div>
+            <div class="portfolio-card__info">
+              <h4>Fixture para linha de montagem</h4>
+              <p>Gabarito de posicionamento com 8 pontos de referência para montagem de componentes eletrônicos</p>
+              <span class="material-tag">PC · Alta temperatura</span>
+            </div>
+          </div>
+
+          <div class="portfolio-card reveal" data-category="reversa">
+            <div class="portfolio-card__img portfolio-card__img--5">
+              <div class="portfolio-card__overlay">
+                <span class="portfolio-card__cat">Engenharia Reversa</span>
+              </div>
+            </div>
+            <div class="portfolio-card__info">
+              <h4>Componente hidráulico legado</h4>
+              <p>Reconstrução digital de peça sem documentação, com validação dimensional completa</p>
+              <span class="material-tag">PETG · Alta resistência</span>
+            </div>
+          </div>
+
+          <div class="portfolio-card reveal" data-category="produto">
+            <div class="portfolio-card__img portfolio-card__img--6">
+              <div class="portfolio-card__overlay">
+                <span class="portfolio-card__cat">Produto</span>
+              </div>
+            </div>
+            <div class="portfolio-card__info">
+              <h4>Acessório ergonômico customizado</h4>
+              <p>Série de 50 unidades com variações dimensionais por tamanho P, M e G</p>
+              <span class="material-tag">TPU · Flexível</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJETOS EM DESENVOLVIMENTO -->
+    <section class="in-progress" id="em-andamento">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-tag">Em andamento</div>
+          <h2 class="section-title">Projetos em desenvolvimento</h2>
+          <p class="section-sub">Uma visão do que está acontecendo na oficina agora.</p>
+        </div>
+        <div class="in-progress__grid">
+
+          <div class="progress-card reveal">
+            <div class="progress-card__header">
+              <div class="status-badge status-badge--printing">
+                <span class="dot dot--pulse"></span> Imprimindo
+              </div>
+              <span class="progress-card__material">Nylon PA12</span>
+            </div>
+            <h4>Peças estruturais para robótica</h4>
+            <p>Conjunto de 14 componentes para braço robótico articulado de 6 eixos</p>
+            <div class="progress-bar">
+              <div class="progress-bar__fill" style="--pct: 68%"></div>
+            </div>
+            <span class="progress-card__eta">ETA: 2 dias</span>
+          </div>
+
+          <div class="progress-card reveal">
+            <div class="progress-card__header">
+              <div class="status-badge status-badge--modeling">
+                <span class="dot dot--blue"></span> Modelagem
+              </div>
+              <span class="progress-card__material">Resina ABS-like</span>
+            </div>
+            <h4>Maquete hospitalar 1:50</h4>
+            <p>Hospital de 4 andares com detalhamento interno e área externa para apresentação ao conselho</p>
+            <div class="progress-bar">
+              <div class="progress-bar__fill" style="--pct: 35%"></div>
+            </div>
+            <span class="progress-card__eta">ETA: 5 dias</span>
+          </div>
+
+          <div class="progress-card reveal">
+            <div class="progress-card__header">
+              <div class="status-badge status-badge--finishing">
+                <span class="dot dot--green"></span> Acabamento
+              </div>
+              <span class="progress-card__material">ABS pintado</span>
+            </div>
+            <h4>Protótipo de embalagem cosmética</h4>
+            <p>Frasco premium com tampa rosqueada e texturas de superfície — 3 variações de design</p>
+            <div class="progress-bar">
+              <div class="progress-bar__fill" style="--pct: 88%"></div>
+            </div>
+            <span class="progress-card__eta">ETA: Amanhã</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-simple">
+      <div class="cta-simple__glow"></div>
+      <div class="container">
+        <div class="cta-simple__inner reveal">
+          <div class="section-tag section-tag--center">O próximo projeto pode ser o seu</div>
+          <h2 class="cta-simple__title">Vamos criar<br />algo juntos?</h2>
+          <p class="cta-simple__sub">Conte o que precisa. Analisamos a viabilidade técnica e enviamos orçamento em até 24h, sem compromisso.</p>
+          <div class="cta-simple__actions">
+            <a href="orcamento.html" class="btn btn--primary btn--lg">Iniciar Projeto</a>
+            <a href="solucoes.html" class="btn btn--ghost btn--lg">Ver soluções →</a>
+          </div>
+          <p class="cta-note">Ou fale direto pelo <a href="https://wa.me/5500000000000">WhatsApp</a></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="index.html" class="nav__logo">3D<span>CPX</span></a>
+          <p>Impressão 3D de alta precisão e engenharia reversa. Do problema à solução.</p>
+          <div class="footer__social">
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M7 10v7M7 7v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11 17v-4c0-1.5 1-2 2-2s2 .5 2 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11 10v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+            <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none"><path d="M21 12C21 16.97 16.97 21 12 21C10.5 21 9.08 20.63 7.84 19.98L3 21L4.02 16.16C3.37 14.92 3 13.5 3 12C3 7.03 7.03 3 12 3C16.97 3 21 7.03 21 12Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+        <div class="footer__cols">
+          <div class="footer__col">
+            <h5>Serviços</h5>
+            <a href="solucoes.html">Prototipagem Rápida</a>
+            <a href="engenharia-reversa.html">Engenharia Reversa</a>
+            <a href="solucoes.html">Peças Funcionais</a>
+            <a href="solucoes.html">Modelagem 3D</a>
+            <a href="solucoes.html">Pós-processamento</a>
+          </div>
+          <div class="footer__col">
+            <h5>Empresa</h5>
+            <a href="sobre.html">Sobre Pedro</a>
+            <a href="sobre.html">A Oficina</a>
+            <a href="portfolio.html">Portfólio</a>
+            <a href="orcamento.html">FAQ</a>
+          </div>
+          <div class="footer__col">
+            <h5>Contato</h5>
+            <a href="mailto:contato@3dcpx.com.br">contato@3dcpx.com.br</a>
+            <a href="https://wa.me/5500000000000">WhatsApp</a>
+            <span>Atendimento: Seg–Sex, 8h–18h</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2025 3DCPX. Todos os direitos reservados.</p>
+        <p>CNPJ: 00.000.000/0001-00</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
