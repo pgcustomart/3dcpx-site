@@ -1,0 +1,32 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporários e logs
+*.log
+*.tmp
+*.bak
+
+# Assets originais de alta resolução (não versionar arquivos pesados)
+assets/images/**/*.psd
+assets/images/**/*.ai
+assets/images/**/*.tiff
+assets/images/**/*.raw
+
+# Documentos PDF intermediários (manter apenas versão final em docs/)
+*.pdf
+!docs/*.pdf
+
+# Node (caso ferramentas de build sejam adicionadas no futuro)
+node_modules/
+dist/
+.env
+.env.local
