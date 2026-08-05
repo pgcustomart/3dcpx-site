@@ -205,7 +205,7 @@ function renderPortfolioGrid(content, { filtersHtml = '', sectionId = '' } = {})
       (p) => `
           <div class="portfolio-card reveal" data-category="${escapeHtml(categoriaSlug(p.categoria))}">
             <div class="portfolio-card__img">
-              <img src="${escapeHtml(p.imagem_url)}" alt="${escapeHtml(p.titulo)}" width="600" height="400" loading="lazy" decoding="async" />
+              <img src="${escapeHtml(p.imagem_url)}" alt="${escapeHtml(p.titulo)}" width="400" height="400" loading="lazy" decoding="async" />
               <div class="portfolio-card__overlay">
                 <span class="portfolio-card__cat">${escapeHtml(p.categoria)}</span>
               </div>

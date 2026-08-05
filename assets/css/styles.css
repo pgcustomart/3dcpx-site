@@ -943,30 +943,31 @@ select, input, textarea {
 
 .portfolio__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 400px);
   grid-template-rows: auto;
+  justify-content: center;
   gap: 16px;
 }
 
 .portfolio-card {
   background: var(--bg-3);
-  border: 1px solid var(--border);
+  box-shadow: inset 0 0 0 1px var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: transform 0.25s, border-color 0.25s;
+  transition: transform 0.25s, box-shadow 0.25s;
 }
 .portfolio-card:hover {
   transform: translateY(-4px);
-  border-color: var(--border-2);
+  box-shadow: inset 0 0 0 1px var(--border-2);
 }
-.portfolio-card--tall { grid-row: span 2; }
+.portfolio-card--tall { grid-row: auto; }
 
 .portfolio-card__img {
   position: relative;
   overflow: hidden;
+  width: 100%;
+  height: 400px;
 }
-.portfolio-card--tall .portfolio-card__img { height: 100%; min-height: 320px; }
-.portfolio-card:not(.portfolio-card--tall) .portfolio-card__img { height: 200px; }
 
 /* Gradient placeholders for portfolio items */
 .portfolio-card__img--1 { background: linear-gradient(135deg, #0e0e16 0%, #141224 50%, #0e0e16 100%); }
@@ -1007,19 +1008,28 @@ select, input, textarea {
 }
 
 .portfolio-card__info {
-  padding: 20px 20px 24px;
+  padding: 14px 16px 16px;
 }
 .portfolio-card__info h4 {
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 6px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .portfolio-card__info p {
   font-size: 0.82rem;
   color: var(--text-3);
-  line-height: 1.55;
-  margin-bottom: 12px;
+  line-height: 1.5;
+  height: 3em;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .material-tag {
@@ -1877,6 +1887,7 @@ select, input, textarea {
   .solutions__grid { grid-template-columns: repeat(2, 1fr); }
   .portfolio__grid { grid-template-columns: repeat(2, 1fr); }
   .portfolio-card--tall { grid-row: auto; }
+  .portfolio-card__img { width: 100%; height: auto; aspect-ratio: 1 / 1; }
   .no-file__inner { gap: 48px; }
   .reverse-eng__inner { gap: 48px; }
   .workshop__inner { gap: 48px; }
