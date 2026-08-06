@@ -107,11 +107,14 @@ const pages = [
         content: {
           titulo: 'Não tem arquivo 3D? <br /><em>Partimos do que você tem.</em>',
           subtitulo: 'Problema resolvido',
+          descricao: 'A maioria dos clientes chega sem modelo digital: uma peça física, um desenho, uma foto ou apenas uma descrição do problema. A partir daí, cuidamos da modelagem, do escaneamento e da engenharia reversa necessária para chegar ao arquivo de impressão.',
           cards: [
             { titulo: 'Tenho uma peça física', descricao: 'Fazemos escaneamento 3D e engenharia reversa' },
             { titulo: 'Tenho um desenho ou croqui', descricao: 'Modelamos em 3D a partir do seu material' },
             { titulo: 'Tenho apenas uma ideia', descricao: 'Briefing → conceito → modelo → impressão' },
           ],
+          cta_texto: 'Quero começar assim',
+          cta_link: 'orcamento.html',
         },
       },
       {

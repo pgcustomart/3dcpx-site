@@ -6,7 +6,9 @@ function ctaButton(texto, link, cssClass) {
 }
 
 // variant: 'home' (hero completo com fundo/badge) | 'page' (page-header simples de página interna)
-function renderHero(content, { variant = 'home' } = {}) {
+// statsContent: só usado no variant 'home' — content bruto do bloco stats_bar que deve
+// aparecer DENTRO do hero (estrutura fixa da Home, ver assembleIndex em pageTemplates.js).
+function renderHero(content, { variant = 'home', statsContent } = {}) {
   const c = content || {};
   if (variant === 'page') {
     return `
@@ -34,18 +36,59 @@ function renderHero(content, { variant = 'home' } = {}) {
         <div class="hero__glow-rose"></div>
       </div>
       <div class="container hero__inner">
+        <div class="hero__badge reveal">
+          <span class="dot dot--gold"></span>
+          Impressão 3D Industrial · Modelagem · Prototipagem Rápida
+        </div>
         <h1 class="hero__headline reveal">${richText(c.titulo)}</h1>
         <p class="hero__sub reveal">${escapeHtml(c.subtitulo)}</p>
         <div class="hero__actions reveal">
           ${ctaButton(c.cta_texto, c.cta_link, 'btn btn--primary btn--lg')}
           ${ctaButton(c.cta_secundario_texto, c.cta_secundario_link, 'btn btn--ghost btn--lg')}
         </div>
+        ${renderHeroStats(statsContent)}
       </div>
       <div class="hero__scroll-hint">
         <span>scroll</span>
         <div class="scroll-line"></div>
       </div>
     </section>`;
+}
+
+// Estatísticas embutidas no hero (composição original) — não confundir com
+// renderProofNumbers, usado no bloco de prova social logo abaixo do hero.
+function renderHeroStats(content) {
+  const stats = (content && content.stats) || [];
+  if (!stats.length) return '';
+  const items = stats
+    .map(
+      (s, i) => `${i > 0 ? '<div class="stat__divider"></div>' : ''}
+          <div class="stat">
+            <span class="stat__num">${escapeHtml(s.valor)}</span>
+            <span class="stat__label">${escapeHtml(s.label)}</span>
+          </div>`
+    )
+    .join('\n');
+  return `
+        <div class="hero__stats reveal">
+          ${items}
+        </div>`;
+}
+
+function renderProofNumbers(content) {
+  const stats = (content && content.stats) || [];
+  if (!stats.length) return '';
+  const items = stats
+    .map(
+      (s) => `
+          <div class="proof-num reveal">
+            <strong>${escapeHtml(s.valor)}</strong>
+            <span>${escapeHtml(s.label)}</span>
+          </div>`
+    )
+    .join('');
+  return `
+        <div class="social-proof__numbers">${items}</div>`;
 }
 
 function renderStatsBar(content) {
@@ -69,7 +112,9 @@ function renderStatsBar(content) {
     </section>`;
 }
 
-function renderSectorTicker(content) {
+// statsContent: content bruto do bloco stats_bar exibido como grid de números
+// dentro desta mesma seção (estrutura original "prova social" — ver assembleIndex).
+function renderSectorTicker(content, { statsContent } = {}) {
   const setores = (content && content.setores) || [];
   const track = setores
     .map((s) => `<span class="ticker__item">${escapeHtml(s)}</span><span class="ticker__sep">·</span>`)
@@ -84,6 +129,7 @@ function renderSectorTicker(content) {
             ${track}
           </div>
         </div>
+        ${renderProofNumbers(statsContent)}
       </div>
     </section>`;
 }
@@ -109,14 +155,43 @@ function renderProblemCards(content) {
           <div class="no-file__text reveal">
             <div class="section-tag">${escapeHtml(c.subtitulo)}</div>
             <h2 class="section-title">${richText(c.titulo)}</h2>
+            ${c.descricao ? `<p class="section-body">${escapeHtml(c.descricao)}</p>` : ''}
             <ul class="no-file__list">${cards}</ul>
+            ${ctaButton(c.cta_texto, c.cta_link, 'btn btn--primary')}
+          </div>
+          <div class="no-file__visual reveal">
+            <div class="visual-card">
+              <div class="visual-card__placeholder">
+                <div class="placeholder-icon">
+                  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M32 8L56 22V42L32 56L8 42V22L32 8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M32 8V56M8 22L32 35L56 22" stroke="currentColor" stroke-width="1.5"/>
+                  </svg>
+                </div>
+                <span>Objeto físico → Arquivo 3D → Peça impressa</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>`;
 }
 
-function renderSolutionsGrid(content) {
+// showCta/sectionId: opções fixas de composição (não vêm do CMS) — controlam se este
+// bloco reaparece com o link "ver tudo" ao final, usado só na Home (ver assembleIndex).
+// Ícones fixos por título de serviço (estrutura/design original) — não vêm do CMS.
+// Cards com título fora deste mapa (ex.: aplicações da página Engenharia Reversa)
+// simplesmente não ganham ícone, como já acontecia antes.
+const SOLUTION_ICONS = {
+  'Prototipagem Rápida': '<svg viewBox="0 0 48 48" fill="none"><path d="M24 4L44 16V32L24 44L4 32V16L24 4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M24 4V44M4 16L24 28L44 16" stroke="currentColor" stroke-width="1.5"/></svg>',
+  'Engenharia Reversa': '<svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M24 12V24L32 32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M8 24H6M42 24H40M24 8V6M24 42V40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  'Peças Funcionais': '<svg viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M16 24H32M24 16V32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  'Modelagem 3D': '<svg viewBox="0 0 48 48" fill="none"><path d="M24 4L44 24L24 44L4 24L24 4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M24 12V36M12 24H36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  'Pós-processamento': '<svg viewBox="0 0 48 48" fill="none"><path d="M8 40L20 28M28 20L40 8M20 28L28 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="36" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="36" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/></svg>',
+  'Produção sob Demanda': '<svg viewBox="0 0 48 48" fill="none"><path d="M24 4C13 4 4 13 4 24s9 20 20 20 20-9 20-20S35 4 24 4z" stroke="currentColor" stroke-width="1.5"/><path d="M24 16v8l6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+};
+
+function renderSolutionsGrid(content, { showCta = false, sectionId = '' } = {}) {
   const c = content || {};
   const header =
     c.titulo || c.subtitulo
@@ -127,21 +202,27 @@ function renderSolutionsGrid(content) {
         </div>`
       : '';
   const cards = (c.cards || [])
-    .map(
-      (card) => `
+    .map((card) => {
+      const icon = SOLUTION_ICONS[card.titulo];
+      return `
           <div class="solution-card${card.destaque ? ' solution-card--highlight' : ''} reveal">
             ${card.destaque ? '<div class="solution-card__badge">Mais solicitado</div>' : ''}
+            ${icon ? `<div class="solution-card__icon">${icon}</div>` : ''}
             <h3>${escapeHtml(card.titulo)}</h3>
             <p>${escapeHtml(card.descricao)}</p>
             ${(card.tags || []).length ? `<div class="solution-card__tags">${card.tags.map((t) => `<span>${escapeHtml(t)}</span>`).join('')}</div>` : ''}
-          </div>`
-    )
+          </div>`;
+    })
     .join('');
   return `
-    <section class="solutions">
+    <section class="solutions"${sectionId ? ` id="${sectionId}"` : ''}>
       <div class="container">
         ${header}
         <div class="solutions__grid">${cards}</div>
+        ${showCta ? `
+        <div class="portfolio__cta reveal">
+          <a href="solucoes.html" class="btn btn--outline">Ver todas as soluções e o processo completo →</a>
+        </div>` : ''}
       </div>
     </section>`;
 }
@@ -190,7 +271,7 @@ function categoriaSlug(categoria) {
   return map[categoria] || 'geral';
 }
 
-function renderPortfolioGrid(content, { filtersHtml = '', sectionId = '' } = {}) {
+function renderPortfolioGrid(content, { filtersHtml = '', sectionId = '', showCta = false } = {}) {
   const c = content || {};
   const header =
     c.titulo || c.subtitulo
@@ -224,6 +305,10 @@ function renderPortfolioGrid(content, { filtersHtml = '', sectionId = '' } = {})
         ${header}
         ${filtersHtml}
         <div class="portfolio__grid">${cards}</div>
+        ${showCta ? `
+        <div class="portfolio__cta reveal">
+          <a href="portfolio.html" class="btn btn--outline">Ver portfólio completo →</a>
+        </div>` : ''}
       </div>
     </section>`;
 }
@@ -240,6 +325,9 @@ function renderFounderBio(content, { variant = 'full' } = {}) {
   if (variant === 'compact') {
     return `
           <div class="studio__person reveal">
+            <div class="studio__avatar">
+              <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="11" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M4 28C4 21.4 9.4 16 16 16C22.6 16 28 21.4 28 28" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </div>
             <div class="section-tag">Sobre</div>
             <div class="studio__name">${escapeHtml(c.nome)}</div>
             <div class="studio__role">${escapeHtml(c.cargo)}</div>
@@ -317,13 +405,16 @@ function renderWorkshopSpecs(content, { variant = 'full' } = {}) {
           </div>`;
 }
 
-function renderCtaFinal(content) {
+// eyebrow/sectionId: rótulo e âncora fixos de composição (não vêm do CMS) —
+// variam por página no design original, então só são passados pelo template que precisa.
+function renderCtaFinal(content, { eyebrow = '', sectionId = '' } = {}) {
   const c = content || {};
   return `
-    <section class="cta-simple">
+    <section class="cta-simple"${sectionId ? ` id="${sectionId}"` : ''}>
       <div class="cta-simple__glow"></div>
       <div class="container">
         <div class="cta-simple__inner reveal">
+          ${eyebrow ? `<div class="section-tag section-tag--center">${escapeHtml(eyebrow)}</div>` : ''}
           <h2 class="cta-simple__title">${richText(c.titulo)}</h2>
           <p class="cta-simple__sub">${escapeHtml(c.subtitulo)}</p>
           <div class="cta-simple__actions">

@@ -29,17 +29,27 @@ class BlockQueue {
     const block = queue.shift();
     return renderBlock(block, options);
   }
+
+  // Retira um bloco da fila sem renderizá-lo — usado quando o content de um bloco
+  // precisa ser injetado dentro da composição de OUTRO bloco (ex.: stats_bar dentro do hero).
+  shiftContent(type) {
+    const queue = this.byType.get(type);
+    if (!queue || queue.length === 0) return null;
+    return queue.shift().content;
+  }
 }
 
 function assembleIndex(blocks) {
   const q = new BlockQueue(blocks);
+  // Estrutura original da Home: o 1º stats_bar mora DENTRO do hero, o 2º mora DENTRO
+  // da seção de prova social (grid de números) — nenhum dos dois é uma seção própria.
+  const heroStats = q.shiftContent('stats_bar');
+  const proofStats = q.shiftContent('stats_bar');
   return [
-    q.next('hero', { variant: 'home' }),
-    q.next('stats_bar'),
-    q.next('sector_ticker'),
-    q.next('stats_bar'),
+    q.next('hero', { variant: 'home', statsContent: heroStats }),
+    q.next('sector_ticker', { statsContent: proofStats }),
     q.next('problem_cards'),
-    q.next('solutions_grid'),
+    q.next('solutions_grid', { showCta: true, sectionId: 'solucoes' }),
     `
     <section class="reverse-eng" id="engenharia-reversa">
       <div class="container">
@@ -49,7 +59,7 @@ function assembleIndex(blocks) {
         </div>
       </div>
     </section>`,
-    q.next('portfolio_grid'),
+    q.next('portfolio_grid', { showCta: true, sectionId: 'portfolio' }),
     `
     <section class="studio" id="sobre">
       <div class="container">
@@ -59,7 +69,7 @@ function assembleIndex(blocks) {
         </div>
       </div>
     </section>`,
-    q.next('cta_final'),
+    q.next('cta_final', { eyebrow: 'Vamos começar', sectionId: 'cta' }),
   ].join('\n');
 }
 

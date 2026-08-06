@@ -48,7 +48,10 @@ const SCHEMAS = {
   problem_cards: {
     titulo: str,
     subtitulo: str,
+    descricao: str,
     cards: arrayOf(mapSimpleCard),
+    cta_texto: str,
+    cta_link: str,
   },
   solutions_grid: {
     titulo: str,
