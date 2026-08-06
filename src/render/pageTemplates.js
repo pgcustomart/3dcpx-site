@@ -9,6 +9,7 @@ const {
   workshopGallery,
   contactFormSection,
   faqSection,
+  homeFaq,
 } = require('./staticSections');
 
 // Agrupa os blocks (já ordenados) por tipo e permite consumi-los em sequência —
@@ -69,6 +70,7 @@ function assembleIndex(blocks) {
         </div>
       </div>
     </section>`,
+    homeFaq(),
     q.next('cta_final', { eyebrow: 'Vamos começar', sectionId: 'cta' }),
   ].join('\n');
 }

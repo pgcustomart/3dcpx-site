@@ -1489,11 +1489,38 @@ select, input, textarea {
 .faq-item__q:hover { background: var(--bg-3); }
 .faq-item__q[aria-expanded="true"] { background: var(--bg-3); }
 
-.faq-item__q span:first-child {
+.faq-item__q-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.faq-item__text {
   font-size: 0.95rem;
   font-weight: 500;
   color: var(--text);
   line-height: 1.4;
+}
+
+/* Ícone SVG próprio de cada pergunta (só no FAQ da Home — ver homeFaq() em staticSections.js) */
+.faq-item__svg {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-3);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--purple-l);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.faq-item__svg svg { width: 100%; height: 100%; display: block; }
+.faq-item__q:hover .faq-item__svg,
+.faq-item__q[aria-expanded="true"] .faq-item__svg {
+  transform: scale(1.08) rotate(-4deg);
+  box-shadow: inset 0 0 0 1px var(--purple);
 }
 
 .faq-item__icon {
@@ -2125,6 +2152,9 @@ select, input, textarea {
   .re-applications__grid { grid-template-columns: repeat(2, 1fr); }
   .page-header { padding: 110px 0 48px; }
   .page-header__title { font-size: clamp(2rem, 8vw, 3rem); }
+  .faq-item__q { padding: 16px 16px; gap: 10px; }
+  .faq-item__q-main { gap: 12px; }
+  .faq-item__svg { width: 32px; height: 32px; padding: 6px; }
 }
 
 /* Small mobile — 480px */

@@ -341,7 +341,7 @@ function faqSection() {
       ([q, a]) => `
           <div class="faq-item reveal">
             <button class="faq-item__q" aria-expanded="false">
-              <span>${q}</span>
+              <span class="faq-item__text">${q}</span>
               <span class="faq-item__icon">+</span>
             </button>
             <div class="faq-item__a"><p>${a}</p></div>
@@ -360,6 +360,82 @@ function faqSection() {
     </section>`;
 }
 
+// Ícones de traço único (viewBox 40x40, stroke-width 1.4) — mesma linguagem visual
+// dos ícones de re-step/solution card já usados no site (ver reEngVisualFull acima
+// e SOLUTION_ICONS em blockRenderers.js). Um por pergunta do FAQ da Home.
+const HOME_FAQ_ICONS = {
+  calendario: '<svg viewBox="0 0 40 40" fill="none"><rect x="7" y="9" width="26" height="24" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="M7 16h26" stroke="currentColor" stroke-width="1.4"/><path d="M13 6v6M27 6v6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M13 22h4M13 27h4M23 22h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+  documento: '<svg viewBox="0 0 40 40" fill="none"><path d="M12 6h11l6 6v20a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M23 6v6h6" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M14 20h12M14 25h12M14 30h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+  cubo3d: '<svg viewBox="0 0 40 40" fill="none"><path d="M20 5 34 13v14L20 35 6 27V13L20 5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M20 20 34 13M20 20 6 13M20 20v15" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+  scanner: '<svg viewBox="0 0 40 40" fill="none"><path d="M8 15V9a2 2 0 0 1 2-2h6M32 15V9a2 2 0 0 0-2-2h-6M8 25v6a2 2 0 0 0 2 2h6M32 25v6a2 2 0 0 1-2 2h-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 13v14M13 20h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+  engrenagem: '<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M20 8v4M20 28v4M8 20h4M28 20h4M11.5 11.5l2.8 2.8M25.7 25.7l2.8 2.8M11.5 28.5l2.8-2.8M25.7 14.3l2.8-2.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+  predio: '<svg viewBox="0 0 40 40" fill="none"><rect x="10" y="6" width="20" height="28" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M15 12h2M23 12h2M15 18h2M23 18h2M15 24h2M23 24h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M17 34v-6h6v6" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+  cartao: '<svg viewBox="0 0 40 40" fill="none"><rect x="5" y="10" width="30" height="20" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="M5 16h30" stroke="currentColor" stroke-width="1.4"/><path d="M10 24h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+  caminhao: '<svg viewBox="0 0 40 40" fill="none"><path d="M4 12h18v14H4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M22 18h7l5 5v3h-12z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><circle cx="11" cy="29" r="2.6" stroke="currentColor" stroke-width="1.4"/><circle cx="28" cy="29" r="2.6" stroke="currentColor" stroke-width="1.4"/></svg>',
+  upload: '<svg viewBox="0 0 40 40" fill="none"><path d="M12 25v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 6v17M14 13l6-7 6 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  headset: '<svg viewBox="0 0 40 40" fill="none"><path d="M8 21v-2a12 12 0 0 1 24 0v2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><rect x="5" y="21" width="7" height="10" rx="2.5" stroke="currentColor" stroke-width="1.4"/><rect x="28" y="21" width="7" height="10" rx="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M35 31v2a4 4 0 0 1-4 4h-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+};
+
+// FAQ da Home — conteúdo institucional fixo (não vem do CMS, mesmo padrão de faqSection()
+// acima). Cada item tem um ícone próprio (HOME_FAQ_ICONS) e alimenta o JSON-LD FAQPage
+// para SEO. Accordion reaproveita a mesma classe (.faq-item__q) e o mesmo JS de
+// script.js usado no FAQ da página de Orçamento — sem duplicar lógica de interação.
+function homeFaq() {
+  const items = [
+    ['calendario', 'Quanto tempo leva um projeto?', 'Cada projeto tem um prazo diferente, conforme complexidade, acabamento e quantidade de peças. Protótipos simples saem em 24–48h após aprovação do orçamento; projetos com modelagem, séries maiores ou acabamento especial podem levar de 5 a 15 dias úteis. O prazo exato é informado no orçamento, antes de qualquer cobrança.'],
+    ['documento', 'Como funciona o orçamento?', 'O orçamento é elaborado depois que analisamos as informações e os arquivos que você envia — pode ser um arquivo 3D, uma foto, um desenho técnico ou apenas a descrição do que você precisa. Com base nisso, definimos processo, material e prazo, e enviamos o valor em até 24h, sem compromisso.'],
+    ['cubo3d', 'Vocês trabalham com impressão 3D?', 'Sim. Trabalhamos com impressão 3D profissional em diferentes tecnologias e materiais — PLA, ABS, PETG, Nylon PA12, resina SLA e outros — escolhidos de acordo com a aplicação, o esforço mecânico e o acabamento que a peça precisa.'],
+    ['scanner', 'Vocês fazem engenharia reversa?', 'Sim. Escaneamos a peça física, reconstruímos o modelo 3D em CAD e entregamos uma peça nova — idêntica ou melhorada — com validação dimensional completa.'],
+    ['engrenagem', 'Quais materiais são utilizados?', 'Trabalhamos com PLA, ABS, PETG, resinas e outros materiais técnicos, escolhidos conforme a aplicação de cada peça: resistência mecânica, temperatura, flexibilidade ou acabamento visual.'],
+    ['predio', 'Vocês atendem empresas?', 'Sim. Desenvolvemos protótipos, dispositivos, gabaritos, fixtures e produção seriada para indústria, arquitetura, produto e pesquisa, com contratos de fornecimento contínuo quando necessário.'],
+    ['cartao', 'Como funciona o pagamento?', 'O pagamento é definido conforme a negociação de cada projeto, considerando valor, prazo e forma de entrega. As condições são combinadas junto com o orçamento, antes do início da produção.'],
+    ['caminhao', 'Vocês enviam para todo o Brasil?', 'Sim. Enviamos para todo o território nacional, com o custo de frete calculado e informado já no orçamento.'],
+    ['upload', 'Posso enviar meu projeto?', 'Sim. Você pode enviar desenhos, fotos, referências ou arquivos 3D — não precisa ter um modelo pronto. Nossa equipe cuida da modelagem e te apresenta o projeto antes de qualquer impressão.'],
+    ['headset', 'Como entrar em contato?', 'Você pode falar com a gente pelo WhatsApp ou pelo formulário de contato disponível no site. Respondemos em até 24h.'],
+  ];
+
+  const list = items
+    .map(
+      ([icon, q, a]) => `
+          <div class="faq-item reveal">
+            <button class="faq-item__q" aria-expanded="false">
+              <span class="faq-item__q-main">
+                <span class="faq-item__svg">${HOME_FAQ_ICONS[icon]}</span>
+                <span class="faq-item__text">${q}</span>
+              </span>
+              <span class="faq-item__icon">+</span>
+            </button>
+            <div class="faq-item__a"><p>${a}</p></div>
+          </div>`
+    )
+    .join('');
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map(([, q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  };
+  // "</" escapado defensivamente para não fechar a tag <script> caso o conteúdo mude no futuro.
+  const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(jsonLd).replace(/<\//g, '<\\/')}</script>`;
+
+  return `
+    <section class="faq" id="faq">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-tag">Dúvidas frequentes</div>
+          <h2 class="section-title">Perguntas <em>frequentes.</em></h2>
+          <p class="section-sub">Tudo o que você precisa saber antes de começar o seu projeto.</p>
+        </div>
+        <div class="faq__list">${list}</div>
+      </div>
+      ${jsonLdScript}
+    </section>`;
+}
+
 module.exports = {
   wrapSection,
   reEngVisualHome,
@@ -370,4 +446,5 @@ module.exports = {
   workshopGallery,
   contactFormSection,
   faqSection,
+  homeFaq,
 };
