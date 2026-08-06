@@ -53,8 +53,8 @@ function renderShell(activeKey, { title = '', user = null, backHref = null } = {
   const overlay = UI.el('div', { class: 'shell__overlay' });
   const sidebar = UI.el('aside', { class: 'shell__sidebar' });
   sidebar.appendChild(UI.el('div', { class: 'shell__brand' }, [
-    UI.el('span', { class: 'shell__brand-mark', text: '3D' }),
-    UI.el('span', { class: 'shell__brand-name', text: 'CPX CMS' }),
+    UI.el('img', { class: 'shell__brand-logo', src: '/assets/images/logo/logo-dark-bg.png', alt: '3DCPX', width: '56', height: '28' }),
+    UI.el('span', { class: 'shell__brand-name', text: 'CMS' }),
   ]));
 
   const nav = UI.el('nav', { class: 'shell__nav' });

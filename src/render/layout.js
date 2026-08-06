@@ -42,7 +42,7 @@ function renderNav(activeSlug) {
   return `
   <header class="nav" id="nav">
     <div class="nav__inner container">
-      <a href="index.html" class="nav__logo">3D<span>CPX</span></a>
+      <a href="index.html" class="nav__logo"><img src="assets/images/logo/logo-dark-bg.png" alt="3DCPX" width="64" height="32" /></a>
       <nav class="nav__links" id="navLinks">
         ${links}
       </nav>
@@ -54,6 +54,12 @@ function renderNav(activeSlug) {
   </header>`;
 }
 
+// Domínio público — Railway injeta RAILWAY_PUBLIC_DOMAIN automaticamente em produção;
+// fallback cobre execução local/preview onde a env var não existe.
+const SITE_URL = process.env.RAILWAY_PUBLIC_DOMAIN
+  ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+  : 'https://3dcpx-site-production.up.railway.app';
+
 // Scripts extras carregados só em páginas específicas (evita peso morto nas demais).
 // A galeria do portfólio consome dados reais gerados por scripts/migrate-portfolio-images.js.
 const PAGE_SCRIPTS = {
@@ -62,6 +68,8 @@ const PAGE_SCRIPTS = {
 
 function renderDocument(slug, mainHtml, footerHtml) {
   const meta = PAGE_META[slug] || { title: '3DCPX', description: '' };
+  const pageUrl = `${SITE_URL}/${slug === 'index' ? '' : slug + '.html'}`;
+  const ogImage = `${SITE_URL}/assets/images/og-image.png`;
   const extraScripts = (PAGE_SCRIPTS[slug] || [])
     .map((src) => `\n  <script src="${src}"></script>`)
     .join('');
@@ -72,6 +80,28 @@ function renderDocument(slug, mainHtml, footerHtml) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${meta.title}</title>
   <meta name="description" content="${meta.description}" />
+
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/icons/site.webmanifest" />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="3DCPX" />
+  <meta property="og:url" content="${pageUrl}" />
+  <meta property="og:title" content="${meta.title}" />
+  <meta property="og:description" content="${meta.description}" />
+  <meta property="og:image" content="${ogImage}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${meta.title}" />
+  <meta name="twitter:description" content="${meta.description}" />
+  <meta name="twitter:image" content="${ogImage}" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />

@@ -36,6 +36,11 @@ app.use(sessionMiddleware);
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/admin', express.static(path.join(__dirname, 'public', 'admin')));
 
+// Fallback para agentes que checam /favicon.ico direto na raiz, sem ler as <link> tags.
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, 'assets', 'icons', 'favicon.ico'));
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api', apiRoutes);
 

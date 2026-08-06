@@ -444,7 +444,7 @@ function renderFooter(content) {
     <div class="container">
       <div class="footer__top">
         <div class="footer__brand">
-          <a href="index.html" class="nav__logo">3D<span>CPX</span></a>
+          <a href="index.html" class="nav__logo"><img src="assets/images/logo/logo-dark-bg.png" alt="3DCPX" width="64" height="32" /></a>
           <p>${escapeHtml(c.descricao)}</p>
           <div class="footer__social">${redes}</div>
         </div>

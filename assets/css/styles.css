@@ -248,13 +248,14 @@ select, input, textarea {
 }
 
 .nav__logo {
-  font-size: 1.6rem;
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  color: var(--text);
+  display: block;
   flex-shrink: 0;
 }
-.nav__logo span { color: var(--gold-l); }
+.nav__logo img {
+  display: block;
+  height: 32px;
+  width: auto;
+}
 
 .nav__links {
   display: flex;
