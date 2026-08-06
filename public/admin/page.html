@@ -3,38 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Editor de página — Painel 3DCPX</title>
+  <title>Editor de página — CMS 3DCPX</title>
   <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="dashboard.css" />
 </head>
 <body>
-  <div class="topbar">
-    <div class="topbar__left">
-      <a href="index.html" class="topbar__back">← Páginas</a>
-      <span class="topbar__title" id="pageTitle">Carregando...</span>
-    </div>
-    <div style="display:flex; gap:8px;">
-      <button class="btn btn--sm" id="previewBtn">Preview ↗</button>
-      <button class="btn btn--sm" id="logoutBtn">Sair</button>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="page-header-row">
-      <h1>Blocos da página</h1>
-      <button class="btn btn--primary btn--sm" id="addBlockBtn">+ Adicionar bloco</button>
-    </div>
-    <div id="blockList" class="block-list loading">Carregando blocos...</div>
-  </div>
-
-  <!-- Painel lateral de edição -->
+  <!-- Painel lateral de edição (mesma estrutura/ids de sempre — page.js depende deles) -->
   <div class="overlay" id="overlay"></div>
   <div class="side-panel" id="sidePanel">
     <div class="side-panel__header">
       <h2 id="sidePanelTitle">Editar bloco</h2>
-      <button class="close-x" id="closeSidePanel">✕</button>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span id="sidePanelPublishBadge" title="Alterações salvas aqui vão ao ar imediatamente — não existe rascunho separado hoje."></span>
+        <button class="close-x" id="closeSidePanel">✕</button>
+      </div>
     </div>
     <div class="side-panel__body" id="sidePanelBody"></div>
     <div class="side-panel__footer">
+      <div id="sidePanelSync" style="margin-right:auto;"></div>
       <button class="btn btn--sm" id="cancelEditBtn">Cancelar</button>
       <button class="btn btn--primary btn--sm" id="saveBlockBtn">Salvar</button>
     </div>
@@ -54,6 +40,9 @@
   </div>
 
   <script src="common.js"></script>
+  <script src="icons.js"></script>
+  <script src="components.js"></script>
+  <script src="shell.js"></script>
   <script src="page.js"></script>
 </body>
 </html>

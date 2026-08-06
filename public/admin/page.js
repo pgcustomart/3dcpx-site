@@ -1,5 +1,6 @@
 const params = new URLSearchParams(window.location.search);
 const slug = params.get('slug');
+const deepLinkBlockId = params.get('block') ? Number(params.get('block')) : null;
 
 let page = null;
 let blocks = [];
@@ -7,9 +8,11 @@ let blockTypesCatalog = null;
 let editingBlock = null;
 let editorState = null;
 let dragFromIndex = null;
+let formDirty = false;
 
-const blockListEl = document.getElementById('blockList');
-const pageTitleEl = document.getElementById('pageTitle');
+let blockListEl = null;
+let pageTitleEl = null;
+let sidePanelSync = null;
 
 const ARRAY_ITEM_TEMPLATES = {
   'stats_bar.stats': { valor: '', label: '' },
@@ -48,14 +51,36 @@ function clearValue(v) {
   return '';
 }
 
+// Só sinaliza "alterações não salvas" na UI — não muda o que é de fato salvo.
+function markDirty() {
+  formDirty = true;
+  if (sidePanelSync) sidePanelSync.setState('unsaved');
+}
+
 async function init() {
-  await requireSession();
-  wireLogout(document.getElementById('logoutBtn'));
+  const session = await requireSession();
+  const content = renderShell('paginas', { title: 'Carregando…', user: session, backHref: 'paginas.html' });
 
   if (!slug) {
-    blockListEl.innerHTML = '<div class="empty-state">Nenhuma página informada.</div>';
+    content.appendChild(UI.emptyState({ icon: '📄', title: 'Nenhuma página informada' }));
     return;
   }
+
+  const headerRow = UI.el('div', { class: 'page-header-row' }, [
+    UI.el('h1', { id: 'pageTitle', text: 'Carregando...' }),
+    UI.el('div', { style: 'display:flex;gap:8px;align-items:center;' }, [
+      UI.el('button', { class: 'btn btn--sm', id: 'previewBtn', type: 'button', text: 'Preview ↗' }),
+      UI.el('button', { class: 'btn btn--primary btn--sm', id: 'addBlockBtn', type: 'button', text: '+ Adicionar bloco' }),
+    ]),
+  ]);
+  content.appendChild(headerRow);
+  content.appendChild(UI.el('div', { id: 'blockList', class: 'block-list loading', text: 'Carregando blocos...' }));
+
+  blockListEl = document.getElementById('blockList');
+  pageTitleEl = document.getElementById('pageTitle');
+  sidePanelSync = UI.syncIndicator('idle');
+  document.getElementById('sidePanelSync').appendChild(sidePanelSync);
+  document.getElementById('sidePanelPublishBadge').appendChild(UI.badge('Publicado · ao vivo', 'success'));
 
   document.getElementById('previewBtn').addEventListener('click', () => {
     const route = PAGE_ROUTE_BY_SLUG[slug] || '/';
@@ -72,6 +97,13 @@ async function init() {
   document.getElementById('saveBlockBtn').addEventListener('click', saveBlock);
 
   await loadBlocks();
+
+  // Deep link (?block=ID), usado pela tela "Blocos" para abrir o editor direto
+  // num bloco específico — não muda nada do fluxo normal quando o parâmetro não vem.
+  if (deepLinkBlockId) {
+    const target = blocks.find((b) => b.id === deepLinkBlockId);
+    if (target) openEditor(target);
+  }
 }
 
 async function loadBlocks() {
@@ -82,7 +114,9 @@ async function loadBlocks() {
     page = data.page;
     blocks = data.blocks;
     pageTitleEl.textContent = page.title;
-    document.title = `${page.title} — Painel 3DCPX`;
+    document.title = `${page.title} — CMS 3DCPX`;
+    const shellTitle = document.querySelector('.shell__title');
+    if (shellTitle) shellTitle.textContent = page.title;
     renderList();
   } catch (err) {
     blockListEl.innerHTML = '<div class="empty-state">Erro ao carregar blocos.</div>';
@@ -194,11 +228,14 @@ async function openEditor(block) {
   renderObjectForm(body, editorState, [block.type]);
   document.getElementById('overlay').classList.add('visible');
   document.getElementById('sidePanel').classList.add('visible');
+  formDirty = false;
+  sidePanelSync.setState('idle');
 }
 
 function closeEditor() {
   editingBlock = null;
   editorState = null;
+  formDirty = false;
   document.getElementById('overlay').classList.remove('visible');
   document.getElementById('sidePanel').classList.remove('visible');
 }
@@ -208,6 +245,7 @@ async function saveBlock() {
   const btn = document.getElementById('saveBlockBtn');
   btn.disabled = true;
   btn.textContent = 'Salvando...';
+  sidePanelSync.setState('saving');
   try {
     const res = await apiFetch(`/api/blocks/${editingBlock.id}`, {
       method: 'PATCH',
@@ -216,8 +254,13 @@ async function saveBlock() {
     const updated = await res.json();
     const idx = blocks.findIndex((b) => b.id === updated.id);
     if (idx >= 0) blocks[idx] = updated;
+    formDirty = false;
+    sidePanelSync.setState('saved');
     closeEditor();
     renderList();
+  } catch (err) {
+    sidePanelSync.setState('error');
+    throw err;
   } finally {
     btn.disabled = false;
     btn.textContent = 'Salvar';
@@ -258,6 +301,7 @@ function renderStringField(obj, key) {
   input.value = obj[key];
   input.addEventListener('input', () => {
     obj[key] = input.value;
+    markDirty();
   });
   field.appendChild(input);
   return field;
@@ -273,6 +317,7 @@ function renderImageField(obj, key) {
     obj[key] = input.value;
     preview.src = input.value;
     preview.style.display = input.value ? 'block' : 'none';
+    markDirty();
   });
   wrap.appendChild(input);
 
@@ -303,6 +348,7 @@ function renderImageField(obj, key) {
       preview.src = data.url;
       preview.style.display = 'block';
       status.textContent = 'Enviado.';
+      markDirty();
     } catch (err) {
       status.textContent = 'Erro de conexão no upload.';
     }
@@ -330,6 +376,7 @@ function renderBoolField(obj, key) {
   input.id = `chk-${key}-${Math.random().toString(36).slice(2)}`;
   input.addEventListener('change', () => {
     obj[key] = input.checked;
+    markDirty();
   });
   const label = document.createElement('label');
   label.htmlFor = input.id;
@@ -380,6 +427,7 @@ function renderArrayField(obj, key, path) {
       input.value = item;
       input.addEventListener('input', () => {
         array[i] = input.value;
+        markDirty();
       });
       row.appendChild(input);
       row.appendChild(removeButton(array, i, box, obj, key, path));
@@ -393,6 +441,7 @@ function renderArrayField(obj, key, path) {
   addBtn.textContent = '+ Adicionar item';
   addBtn.addEventListener('click', () => {
     array.push(getArrayItemTemplate(path[0], key, array));
+    markDirty();
     rerenderArray(box, obj, key, path);
   });
   box.appendChild(addBtn);
@@ -414,6 +463,7 @@ function removeButton(array, i, box, obj, key, path) {
   btn.title = 'Remover item';
   btn.addEventListener('click', () => {
     array.splice(i, 1);
+    markDirty();
     rerenderArray(box, obj, key, path);
   });
   return btn;
@@ -428,6 +478,7 @@ function moveButtons(array, i, box, obj, key, path) {
   up.disabled = i === 0;
   up.addEventListener('click', () => {
     [array[i - 1], array[i]] = [array[i], array[i - 1]];
+    markDirty();
     rerenderArray(box, obj, key, path);
   });
   const down = document.createElement('button');
@@ -437,6 +488,7 @@ function moveButtons(array, i, box, obj, key, path) {
   down.disabled = i === array.length - 1;
   down.addEventListener('click', () => {
     [array[i + 1], array[i]] = [array[i], array[i + 1]];
+    markDirty();
     rerenderArray(box, obj, key, path);
   });
   wrap.appendChild(up);
