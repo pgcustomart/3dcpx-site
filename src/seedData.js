@@ -339,21 +339,6 @@ const pages = [
         },
       },
       {
-        type: 'portfolio_grid',
-        content: {
-          titulo: '',
-          subtitulo: '',
-          projetos: [
-            { imagem_url: 'assets/images/engenharia-reversa/portfolio-reversa.jpg', categoria: 'Engenharia Reversa', titulo: 'Peça de reposição automotiva', descricao: 'Componente descontinuado recriado via escaneamento 3D com tolerância de ±0,1mm', material: 'PA12 · Nylon' },
-            { imagem_url: 'assets/images/maquetes/portfolio-destaque.jpg', categoria: 'Arquitetura', titulo: 'Maquete arquitetônica 1:100', descricao: 'Complexo residencial em escala com detalhamento de fachada e paisagismo', material: 'PLA · Acabamento premium' },
-            { imagem_url: 'assets/images/prototipos/portfolio-produto-01.jpg', categoria: 'Produto', titulo: 'Protótipo de produto de consumo', descricao: 'MVP para apresentação a investidores com encaixe funcional e acabamento pintado', material: 'ABS · Pintado' },
-            { imagem_url: 'assets/images/portfolio/portfolio-industria.jpg', categoria: 'Indústria', titulo: 'Fixture para linha de montagem', descricao: 'Gabarito de posicionamento com 8 pontos de referência para montagem de componentes eletrônicos', material: 'PC · Alta temperatura' },
-            { imagem_url: 'assets/images/engenharia-reversa/portfolio-reversa-02.jpg', categoria: 'Engenharia Reversa', titulo: 'Componente hidráulico legado', descricao: 'Reconstrução digital de peça sem documentação, com validação dimensional completa', material: 'PETG · Alta resistência' },
-            { imagem_url: 'assets/images/prototipos/portfolio-produto-02.jpg', categoria: 'Produto', titulo: 'Acessório ergonômico customizado', descricao: 'Série de 50 unidades com variações dimensionais por tamanho P, M e G', material: 'TPU · Flexível' },
-          ],
-        },
-      },
-      {
         type: 'cta_final',
         content: {
           titulo: 'Vamos criar<br />algo juntos?',

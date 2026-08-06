@@ -47,105 +47,36 @@
       <div class="page-header__overlay"></div>
     </section>
 
-    <!-- PORTFOLIO COMPLETO COM FILTROS -->
+    <!-- PORTFOLIO COMPLETO COM FILTROS (fotos reais dos projetos) -->
     <section class="portfolio" id="projetos" style="padding-top: 88px;">
       <div class="container">
-        <div class="portfolio__filters reveal">
-          <button class="filter-btn active" data-filter="all">Todos</button>
-          <button class="filter-btn" data-filter="industria">Indústria</button>
-          <button class="filter-btn" data-filter="arquitetura">Arquitetura</button>
-          <button class="filter-btn" data-filter="produto">Produto</button>
-          <button class="filter-btn" data-filter="reversa">Eng. Reversa</button>
+        <div class="portfolio__filters reveal" id="pfFilters"></div>
+        <div class="pf-grid" id="pfGrid"></div>
+        <div class="pf-loadmore-wrap">
+          <button class="btn btn--ghost" id="pfLoadMore">Ver mais projetos</button>
         </div>
-        <div class="portfolio__grid">
-
-          <div class="portfolio-card reveal" data-category="reversa">
-            <div class="portfolio-card__img portfolio-card__img--1">
-              <img src="assets/images/engenharia-reversa/portfolio-reversa.jpg" alt="Peça de reposição automotiva recriada por engenharia reversa" width="600" height="400" loading="lazy" decoding="async" />
-              <div class="portfolio-card__overlay">
-                <span class="portfolio-card__cat">Engenharia Reversa</span>
-              </div>
-            </div>
-            <div class="portfolio-card__info">
-              <h4>Peça de reposição automotiva</h4>
-              <p>Componente descontinuado recriado via escaneamento 3D com tolerância de ±0,1mm</p>
-              <span class="material-tag">PA12 · Nylon</span>
-            </div>
-          </div>
-
-          <div class="portfolio-card reveal portfolio-card--tall" data-category="arquitetura">
-            <div class="portfolio-card__img portfolio-card__img--2">
-              <img src="assets/images/maquetes/portfolio-destaque.jpg" alt="Maquete arquitetônica 1:100 de complexo residencial, projeto destaque" width="600" height="800" loading="lazy" decoding="async" />
-              <div class="portfolio-card__overlay">
-                <span class="portfolio-card__cat">Arquitetura</span>
-              </div>
-            </div>
-            <div class="portfolio-card__info">
-              <h4>Maquete arquitetônica 1:100</h4>
-              <p>Complexo residencial em escala com detalhamento de fachada e paisagismo</p>
-              <span class="material-tag">PLA · Acabamento premium</span>
-            </div>
-          </div>
-
-          <div class="portfolio-card reveal" data-category="produto">
-            <div class="portfolio-card__img portfolio-card__img--3">
-              <img src="assets/images/prototipos/portfolio-produto-01.jpg" alt="Protótipo de produto de consumo com acabamento pintado" width="600" height="400" loading="lazy" decoding="async" />
-              <div class="portfolio-card__overlay">
-                <span class="portfolio-card__cat">Produto</span>
-              </div>
-            </div>
-            <div class="portfolio-card__info">
-              <h4>Protótipo de produto de consumo</h4>
-              <p>MVP para apresentação a investidores com encaixe funcional e acabamento pintado</p>
-              <span class="material-tag">ABS · Pintado</span>
-            </div>
-          </div>
-
-          <div class="portfolio-card reveal" data-category="industria">
-            <div class="portfolio-card__img portfolio-card__img--4">
-              <img src="assets/images/portfolio/portfolio-industria.jpg" alt="Fixture industrial para linha de montagem" width="600" height="400" loading="lazy" decoding="async" />
-              <div class="portfolio-card__overlay">
-                <span class="portfolio-card__cat">Indústria</span>
-              </div>
-            </div>
-            <div class="portfolio-card__info">
-              <h4>Fixture para linha de montagem</h4>
-              <p>Gabarito de posicionamento com 8 pontos de referência para montagem de componentes eletrônicos</p>
-              <span class="material-tag">PC · Alta temperatura</span>
-            </div>
-          </div>
-
-          <div class="portfolio-card reveal" data-category="reversa">
-            <div class="portfolio-card__img portfolio-card__img--5">
-              <img src="assets/images/engenharia-reversa/portfolio-reversa-02.jpg" alt="Componente hidráulico legado reconstruído por engenharia reversa" width="600" height="400" loading="lazy" decoding="async" />
-              <div class="portfolio-card__overlay">
-                <span class="portfolio-card__cat">Engenharia Reversa</span>
-              </div>
-            </div>
-            <div class="portfolio-card__info">
-              <h4>Componente hidráulico legado</h4>
-              <p>Reconstrução digital de peça sem documentação, com validação dimensional completa</p>
-              <span class="material-tag">PETG · Alta resistência</span>
-            </div>
-          </div>
-
-          <div class="portfolio-card reveal" data-category="produto">
-            <div class="portfolio-card__img portfolio-card__img--6">
-              <img src="assets/images/prototipos/portfolio-produto-02.jpg" alt="Acessório ergonômico customizado em série" width="600" height="400" loading="lazy" decoding="async" />
-              <div class="portfolio-card__overlay">
-                <span class="portfolio-card__cat">Produto</span>
-              </div>
-            </div>
-            <div class="portfolio-card__info">
-              <h4>Acessório ergonômico customizado</h4>
-              <p>Série de 50 unidades com variações dimensionais por tamanho P, M e G</p>
-              <span class="material-tag">TPU · Flexível</span>
-            </div>
-          </div>
-
-        </div>
+        <p class="pf-loadmore-count" id="pfLoadMoreCount"></p>
       </div>
     </section>
+
+    <!-- LIGHTBOX DA GALERIA -->
+    <div class="pf-lightbox" id="pfLightbox">
+      <div class="pf-lightbox__inner">
+        <button class="pf-lightbox__close" id="pfLbClose" aria-label="Fechar">✕</button>
+        <div class="pf-lightbox__frame">
+          <button class="pf-lightbox__nav pf-lightbox__prev" id="pfLbPrev" aria-label="Foto anterior">‹</button>
+          <img class="pf-lightbox__img" id="pfLbImage" src="" alt="" />
+          <button class="pf-lightbox__nav pf-lightbox__next" id="pfLbNext" aria-label="Próxima foto">›</button>
+        </div>
+        <div class="pf-lightbox__meta">
+          <div>
+            <div class="pf-lightbox__title" id="pfLbTitle"></div>
+            <div class="pf-lightbox__cat" id="pfLbCat"></div>
+          </div>
+          <div class="pf-lightbox__count" id="pfLbCount"></div>
+        </div>
+      </div>
+    </div>
 
     <!-- PROJETOS EM DESENVOLVIMENTO -->
     <section class="in-progress" id="em-andamento">
@@ -272,6 +203,8 @@
     <svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
 
+  <script src="assets/js/portfolio-data.js"></script>
   <script src="assets/js/script.js"></script>
+  <script src="assets/js/portfolio-gallery.js"></script>
 </body>
 </html>

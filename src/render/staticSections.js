@@ -162,15 +162,40 @@ function useCasesTabs() {
     </section>`;
 }
 
-function portfolioFilters() {
+// Galeria real do portfólio — fotos reais dos projetos (não vem do CMS).
+// Filtros, grid, paginação ("ver mais") e lightbox são montados no client
+// por assets/js/portfolio-gallery.js a partir de assets/js/portfolio-data.js
+// (gerado por scripts/migrate-portfolio-images.js a partir das fotos do cliente).
+function realPortfolioGallery() {
   return `
-        <div class="portfolio__filters reveal">
-          <button class="filter-btn active" data-filter="all">Todos</button>
-          <button class="filter-btn" data-filter="industria">Indústria</button>
-          <button class="filter-btn" data-filter="arquitetura">Arquitetura</button>
-          <button class="filter-btn" data-filter="produto">Produto</button>
-          <button class="filter-btn" data-filter="reversa">Eng. Reversa</button>
-        </div>`;
+    <section class="portfolio" id="projetos" style="padding-top: 88px;">
+      <div class="container">
+        <div class="portfolio__filters reveal" id="pfFilters"></div>
+        <div class="pf-grid" id="pfGrid"></div>
+        <div class="pf-loadmore-wrap">
+          <button class="btn btn--ghost" id="pfLoadMore">Ver mais projetos</button>
+        </div>
+        <p class="pf-loadmore-count" id="pfLoadMoreCount"></p>
+      </div>
+    </section>
+
+    <div class="pf-lightbox" id="pfLightbox">
+      <div class="pf-lightbox__inner">
+        <button class="pf-lightbox__close" id="pfLbClose" aria-label="Fechar">✕</button>
+        <div class="pf-lightbox__frame">
+          <button class="pf-lightbox__nav pf-lightbox__prev" id="pfLbPrev" aria-label="Foto anterior">‹</button>
+          <img class="pf-lightbox__img" id="pfLbImage" src="" alt="" />
+          <button class="pf-lightbox__nav pf-lightbox__next" id="pfLbNext" aria-label="Próxima foto">›</button>
+        </div>
+        <div class="pf-lightbox__meta">
+          <div>
+            <div class="pf-lightbox__title" id="pfLbTitle"></div>
+            <div class="pf-lightbox__cat" id="pfLbCat"></div>
+          </div>
+          <div class="pf-lightbox__count" id="pfLbCount"></div>
+        </div>
+      </div>
+    </div>`;
 }
 
 function inProgressProjects() {
@@ -340,7 +365,7 @@ module.exports = {
   reEngVisualHome,
   reEngVisualFull,
   useCasesTabs,
-  portfolioFilters,
+  realPortfolioGallery,
   inProgressProjects,
   workshopGallery,
   contactFormSection,

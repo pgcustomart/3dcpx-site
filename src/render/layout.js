@@ -54,8 +54,17 @@ function renderNav(activeSlug) {
   </header>`;
 }
 
+// Scripts extras carregados só em páginas específicas (evita peso morto nas demais).
+// A galeria do portfólio consome dados reais gerados por scripts/migrate-portfolio-images.js.
+const PAGE_SCRIPTS = {
+  portfolio: ['assets/js/portfolio-data.js', 'assets/js/portfolio-gallery.js'],
+};
+
 function renderDocument(slug, mainHtml, footerHtml) {
   const meta = PAGE_META[slug] || { title: '3DCPX', description: '' };
+  const extraScripts = (PAGE_SCRIPTS[slug] || [])
+    .map((src) => `\n  <script src="${src}"></script>`)
+    .join('');
   return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -77,7 +86,7 @@ ${footerHtml}
   <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo">
     <svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
-  <script src="assets/js/script.js"></script>
+  <script src="assets/js/script.js"></script>${extraScripts}
 </body>
 </html>
 `;

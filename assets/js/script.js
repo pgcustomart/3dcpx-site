@@ -78,34 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ── PORTFOLIO FILTER ─────────────────────── */
-  const filterBtns   = document.querySelectorAll('.filter-btn');
-  const portfolioCards = document.querySelectorAll('.portfolio-card');
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter;
-
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      portfolioCards.forEach(card => {
-        const cat = card.dataset.category;
-        const show = filter === 'all' || cat === filter;
-        card.style.transition = 'opacity 0.3s, transform 0.3s';
-        if (show) {
-          card.style.opacity = '1';
-          card.style.transform = '';
-          card.style.pointerEvents = '';
-        } else {
-          card.style.opacity = '0.2';
-          card.style.transform = 'scale(0.97)';
-          card.style.pointerEvents = 'none';
-        }
-      });
-    });
-  });
-
   /* ── FAQ ACCORDION ────────────────────────── */
   const faqItems = document.querySelectorAll('.faq-item__q');
 

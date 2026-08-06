@@ -4,7 +4,7 @@ const {
   reEngVisualHome,
   reEngVisualFull,
   useCasesTabs,
-  portfolioFilters,
+  realPortfolioGallery,
   inProgressProjects,
   workshopGallery,
   contactFormSection,
@@ -120,7 +120,7 @@ function assemblePortfolio(blocks) {
   const q = new BlockQueue(blocks);
   return [
     q.next('hero', { variant: 'page' }),
-    `<div style="padding-top: 88px;">${q.next('portfolio_grid', { filtersHtml: portfolioFilters() })}</div>`,
+    realPortfolioGallery(),
     inProgressProjects(),
     q.next('cta_final'),
   ].join('\n');

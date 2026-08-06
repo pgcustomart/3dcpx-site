@@ -1046,6 +1046,182 @@ select, input, textarea {
 }
 
 /* ═══════════════════════════════════════════════
+   PORTFOLIO GALLERY — fotos reais dos projetos
+   (página /portfolio.html, ver assets/js/portfolio-gallery.js)
+═══════════════════════════════════════════════ */
+.pf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.pf-card {
+  background: var(--bg-3);
+  box-shadow: inset 0 0 0 1px var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: zoom-in;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.pf-card:hover {
+  transform: translateY(-4px);
+  box-shadow: inset 0 0 0 1px var(--border-2);
+}
+
+.pf-card__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--bg-4);
+  overflow: hidden;
+}
+.pf-card__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.pf-card:hover .pf-card__media img { transform: scale(1.05); }
+
+.pf-card__tag {
+  position: absolute;
+  top: 12px; left: 12px;
+  padding: 4px 10px;
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(124, 113, 245, 0.20);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--purple-l);
+  z-index: 2;
+}
+
+.pf-card__count {
+  position: absolute;
+  top: 12px; right: 12px;
+  padding: 4px 9px;
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-2);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-2);
+  z-index: 2;
+}
+
+.pf-card__body { padding: 14px 16px 16px; }
+.pf-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pf-card__count-text {
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+
+.pf-loadmore-wrap { display: flex; justify-content: center; margin-top: 48px; }
+.pf-loadmore-count { text-align: center; font-size: 0.78rem; color: var(--text-3); margin-top: 14px; }
+
+/* ---------- lightbox ---------- */
+.pf-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 3, 8, 0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  padding: 5vw;
+}
+.pf-lightbox.open { display: flex; }
+
+.pf-lightbox__inner { position: relative; max-width: 1000px; width: 100%; }
+
+.pf-lightbox__frame {
+  position: relative;
+  background: var(--bg-3);
+  box-shadow: inset 0 0 0 1px var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 76vh;
+  overflow: hidden;
+}
+.pf-lightbox__img { max-width: 100%; max-height: 76vh; display: block; object-fit: contain; }
+
+.pf-lightbox__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+.pf-lightbox__title { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.pf-lightbox__cat { margin-top: 2px; }
+.pf-lightbox__count { color: var(--purple-l); font-weight: 600; }
+
+.pf-lightbox__nav {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--border);
+  background: rgba(20, 18, 31, 0.85);
+  color: var(--text);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  border: none;
+}
+.pf-lightbox__nav:hover { box-shadow: inset 0 0 0 1px var(--purple); background: var(--purple-muted); }
+.pf-lightbox__prev { left: 12px; }
+.pf-lightbox__next { right: 12px; }
+
+.pf-lightbox__close {
+  position: absolute;
+  top: -46px;
+  right: 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-3);
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.pf-lightbox__close:hover { color: var(--text); border-color: var(--purple); }
+
+@media (max-width: 768px) {
+  .pf-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pf-lightbox__nav { width: 36px; height: 36px; }
+}
+@media (max-width: 480px) {
+  .pf-grid { grid-template-columns: 1fr; }
+  .pf-lightbox__close { top: -40px; }
+}
+
+/* ═══════════════════════════════════════════════
    IN PROGRESS
 ═══════════════════════════════════════════════ */
 .in-progress {
